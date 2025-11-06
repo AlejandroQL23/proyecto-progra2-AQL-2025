@@ -1,0 +1,26 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de configuración local
+*.env
+.env
+
+
+# Archivos de Jupyter (si usas notebooks)
+.ipynb_checkpoints/
+
+# Librerías o dependencias locales
+site-packages/
+
+# Archivos de build o distribución
+build/
+dist/
+*.egg-info/
