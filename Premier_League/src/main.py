@@ -3,7 +3,7 @@ from pathlib import Path
 # agregar el directorio src al path para imports
 sys.path.append(str(Path(__file__).parent / 'src'))
 from cargaDatos.cargador_datos import CargadorDatos
-from clases import jugador, equipo
+from eda.procesador_eda import ProcesadorEDA
 
 
 
@@ -15,6 +15,11 @@ def main():
         df = cargador.cargar_csv("premier.csv")
 
         #print(df)
+
+        eda = ProcesadorEDA()
+        df_clean = eda.limpieza_datos(df, ruta_salida="data/processed/premier_clean.csv")
+        eda.resumen_descriptivo(df_clean)
+        eda.matriz_correlacion(df_clean, metodo='pearson')
 
     except FileNotFoundError as e:
         print(f"\n ERROR: {e}")
