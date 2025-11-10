@@ -4,6 +4,7 @@ from typing import Optional, List
 from pathlib import Path
 
 
+
 class ProcesadorEDA:
     def __init__(self):
         self._dataframe: Optional[pd.DataFrame] = None
@@ -19,6 +20,7 @@ class ProcesadorEDA:
             df: pd.DataFrame,
             columnas: Optional[List[str]] = None
     ) -> pd.DataFrame:
+
         # es un DF?
         if not isinstance(df, pd.DataFrame):
             print("El parámetro 'df' debe ser un pandas DataFrame")
@@ -28,6 +30,24 @@ class ProcesadorEDA:
         if df.empty:
             print("El DataFrame está vacío")
             raise ValueError("No se puede generar resumen de un DataFrame vacío")
+
+        print("=" * 80)
+        print("TIPOS DE DATOS POR COLUMNA")
+        print("=" * 80)
+
+        # Obtener información de tipos
+        tipos_info = []
+        for col in df.columns:
+            tipo = str(df[col].dtype)
+
+            tipos_info.append({
+                'Columna': col,
+                'Tipo': tipo
+            })
+
+        # DF con info
+        df_tipos = pd.DataFrame(tipos_info)
+        print(df_tipos)
 
         # una columna numérica? (como minimo)
         # df.select_dtypes filtro por tipo de dato
@@ -265,6 +285,21 @@ class ProcesadorEDA:
 
             # seteamos tipo int
             df_limpio['Age'] = pd.to_numeric(df_limpio['Age'], errors='coerce')
+
+        # limpiar PASS COMPLETION % de Object a Float
+        if 'Pass Completion %' in df_limpio.columns:
+
+            # comas por puntos
+            df_limpio['Pass Completion %'] = df_limpio['Pass Completion %'].astype(str).str.replace(',', '.')
+
+            # pasa a float
+            df_limpio['Pass Completion %'] = pd.to_numeric(df_limpio['Pass Completion %'], errors='coerce')
+
+        # limpiar DATE de Object a date
+        if 'Date' in df_limpio.columns:
+
+            # pasa a datetime
+            df_limpio['Date'] = pd.to_datetime(df_limpio['Date'], errors='coerce')
 
         # guardar
         self.guardar_csv_limpio(df_limpio, ruta_salida)
