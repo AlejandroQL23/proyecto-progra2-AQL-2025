@@ -31,7 +31,7 @@ class ProcesadorEDA:
             print("El DataFrame está vacío")
             raise ValueError("No se puede generar resumen de un DataFrame vacío")
 
-        print("=" * 80)
+
         print("TIPOS DE DATOS POR COLUMNA")
         print("=" * 80)
 
@@ -98,19 +98,20 @@ class ProcesadorEDA:
         # redondeo a 2 para que no salgan tantos decimales
         resumen = resumen.round(2)
 
+        """
         print("=" * 80)
         print("RESUMEN DESCRIPTIVO")
         print("=" * 80)
         print(f"Columnas analizadas: {len(columnas_a_analizar)}")
         print(f"Filas totales: {len(df)}")
         print("-" * 80)
+        """
 
         print("\n Resumen Estadístico (primeras 5 columnas):\n")
         print(resumen.iloc[:, :5].to_string())
 
         if len(resumen.columns) > 5:
             print(f"\n... y {len(resumen.columns) - 5} columnas más")
-
 
             print("=" * 80)
 
@@ -179,18 +180,19 @@ class ProcesadorEDA:
             matriz_corr = matriz_corr.round(3)
 
 
+            """
             print("=" * 80)
             print("MATRIZ DE CORRELACIÓN")
             print("=" * 80)
             print(f"Método: {metodo.capitalize()}")
             print(f"Columnas analizadas: {len(columnas_a_analizar)}")
             print(f"Filas con datos: {df[columnas_a_analizar].dropna().shape[0]}")
+            """
 
 
             print("-" * 80)
 
             print(f"\n Matriz de correlación ({matriz_corr.shape[0]}x{matriz_corr.shape[1]}):")
-            print("\nVista previa (primeras 5x5):")
             print(matriz_corr.iloc[:5, :5].to_string())
 
             if matriz_corr.shape[0] > 5:
@@ -300,6 +302,25 @@ class ProcesadorEDA:
 
             # pasa a datetime
             df_limpio['Date'] = pd.to_datetime(df_limpio['Date'], errors='coerce')
+
+        # Se quitan columnas que NO van a ser utilizadas
+
+        eliminar = [
+            '#',
+            'Penalty Shoot on Goal',
+            'Penalty Shoot',
+            'Non-Penalty xG (npxG)',
+            'Dribbles',
+            'Dribble Attempts',
+            'Successful Dribbles'
+        ]
+
+        # existen en el DF?
+        columnas_a_eliminar = [col for col in eliminar if col in df_limpio.columns]
+
+        if columnas_a_eliminar:
+            df_limpio = df_limpio.drop(columns=columnas_a_eliminar)
+
 
         # guardar
         self.guardar_csv_limpio(df_limpio, ruta_salida)
