@@ -3,7 +3,7 @@ from typing import Any
 
 
 class Utilidades:
-    def validar_dataframe(df: Any) -> None:
+    def validar_dataframe(self, df: Any) -> None:
         # es un DF?
         if not isinstance(df, pd.DataFrame):
             print("El parámetro 'df' debe ser un pandas DataFrame")

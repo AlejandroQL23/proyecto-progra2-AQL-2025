@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 from typing import Optional, List
 from pathlib import Path
+from Premier_League.src.helpers.utilidades import Utilidades
 
 
-
-class ProcesadorEDA:
+class ProcesadorEDA(Utilidades):
     def __init__(self):
         self._dataframe: Optional[pd.DataFrame] = None
 
@@ -21,16 +21,7 @@ class ProcesadorEDA:
             columnas: Optional[List[str]] = None
     ) -> pd.DataFrame:
 
-        # es un DF?
-        if not isinstance(df, pd.DataFrame):
-            print("El parámetro 'df' debe ser un pandas DataFrame")
-            raise TypeError(f"Se esperaba pd.DataFrame, se recibió {type(df)}")
-
-        # esta vacío?
-        if df.empty:
-            print("El DataFrame está vacío")
-            raise ValueError("No se puede generar resumen de un DataFrame vacío")
-
+        super().validar_dataframe(df)
 
         print("TIPOS DE DATOS POR COLUMNA")
         print("=" * 80)
@@ -124,15 +115,7 @@ class ProcesadorEDA:
             metodo: str = 'pearson',
     ) -> pd.DataFrame:
 
-        # es un DF?
-        if not isinstance(df, pd.DataFrame):
-            print("El parámetro 'df' debe ser un pandas DataFrame")
-            raise TypeError(f"Se esperaba pd.DataFrame, se recibió {type(df)}")
-
-        # esta vacio?
-        if df.empty:
-            print("El DataFrame está vacío")
-            raise ValueError("No se puede calcular correlación de un DataFrame vacío")
+        super().validar_dataframe(df)
 
         # metodo seleccionado es valido?
         metodos_validos = ['pearson', 'kendall', 'spearman']
@@ -214,15 +197,7 @@ class ProcesadorEDA:
             ruta_salida: str = 'src/data/processed/premier_clean.csv'
     ) -> pd.DataFrame:
 
-        # es un DF??
-        if not isinstance(df, pd.DataFrame):
-            print("El parámetro 'df' debe ser un pandas DataFrame")
-            raise TypeError(f"Se esperaba pd.DataFrame, se recibió {type(df)}")
-
-        # esta vacio?
-        if df.empty:
-            print("El DataFrame está vacío")
-            raise ValueError("No se puede limpiar un DataFrame vacío")
+        super().validar_dataframe(df)
 
         print("=" * 80)
         print("LIMPIEZA DE DATOS")
