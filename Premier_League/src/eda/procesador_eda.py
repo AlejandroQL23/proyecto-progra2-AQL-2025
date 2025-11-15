@@ -296,6 +296,117 @@ class ProcesadorEDA(Utilidades):
         if columnas_a_eliminar:
             df_limpio = df_limpio.drop(columns=columnas_a_eliminar)
 
+        # Transformar Nation de códigos a nombres completos
+        if 'Nation' in df_limpio.columns:
+
+            mapping_paises = {
+                "ENG": "England",
+                "COL": "Colombia",
+                "BRA": "Brazil",
+                "ARG": "Argentina",
+                "URU": "Uruguay",
+                "ESP": "Spain",
+                "FRA": "France",
+                "GER": "Germany",
+                "POR": "Portugal",
+                "NED": "Netherlands",
+                "BEL": "Belgium",
+                "ITA": "Italy",
+                "SCO": "Scotland",
+                "WAL": "Wales",
+                "SUI": "Switzerland",
+                "DEN": "Denmark",
+                "NOR": "Norway",
+                "SWE": "Sweden",
+                "CRO": "Croatia",
+                "SRB": "Serbia",
+                "KOR": "South Korea",
+                "JPN": "Japan",
+                "MEX": "Mexico",
+                "USA": "United States",
+                "CAN": "Canada",
+                "ZAM": "Zambia",
+                "UKR": "Ukraine",
+                "NIR": "Northern Ireland",
+                "MAR": "Morocco",
+                "CMR": "Cameroon",
+                "NGA": "Nigeria",
+                "IRQ": "Iraq",
+                "AUS": "Australia",
+                "IRL": "Ireland",
+                "EGY": "Egypt",
+                "HUN": "Hungary",
+                "GRE": "Greece",
+                "CHI": "Chile",
+                "POL": "Poland",
+                "NZL": "New Zealand",
+                "CIV": "Côte d'Ivoire",
+                "GHA": "Ghana",
+                "BFA": "Burkina Faso",
+                "SEN": "Senegal",
+                "MLI": "Mali",
+                "ROU": "Romania",
+                "ALB": "Albania",
+                "ALG": "Algeria",
+                "GNB": "Guinea-Bissau",
+                "GAM": "Gambia",
+                "ECU": "Ecuador",
+                "GAB": "Gabon",
+                "JAM": "Jamaica",
+                "CZE": "Czech Republic",
+                "COD": "Democratic Republic of the Congo"
+            }
+
+            # reemplazar
+            df_limpio["Nation"] = (
+                df_limpio["Nation"]
+                .astype(str)
+                .str.strip()
+                .str.upper()
+            )
+            df_limpio["Nation"] = df_limpio["Nation"].map(mapping_paises).fillna(df_limpio["Nation"])
+
+        if 'Position' in df_limpio.columns:
+
+            mapping_posiciones = {
+                "GK": "Portero",
+                "DF": "Defensa",
+                "MF": "Centrocampista",
+                "FW": "Delantero",
+
+                "RB": "Lateral Derecho",
+                "LB": "Lateral Izquierdo",
+                "CB": "Defensa Central",
+                "RWB": "Carrilero Derecho",
+                "LWB": "Carrilero Izquierdo",
+                "WB": "Carrilero",
+
+                "CM": "Centrocampista Central",
+                "DM": "Centrocampista Defensivo",
+                "AM": "Centrocampista Ofensivo",
+                "RM": "Extremo Derecho / Medio Derecho",
+                "LM": "Extremo Izquierdo / Medio Izquierdo",
+
+                "RW": "Extremo Derecho",
+                "LW": "Extremo Izquierdo",
+                "CF": "Delantero Centro",
+                "ST": "Delantero",
+                "SS": "Segundo Delantero"
+            }
+
+            df_limpio["Position"] = (
+                df_limpio["Position"]
+                .astype(str)
+                .str.strip()
+                .str.upper()
+            )
+
+            df_limpio["Position"] = (
+                df_limpio["Position"]
+                .map(mapping_posiciones)
+                .fillna(df_limpio["Position"])
+            )
+
 
         # guardar
         self.guardar_csv_limpio(df_limpio, ruta_salida)

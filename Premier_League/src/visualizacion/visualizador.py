@@ -42,7 +42,7 @@ class Visualizador:
         )
 
         fig.update_layout(xaxis={'categoryorder': 'total descending'})
-        fig.show()
+        return fig
 
     def precision_pases(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
@@ -70,7 +70,7 @@ class Visualizador:
             legend_title="Jugador",
             template="plotly_white"
         )
-        fig.show()
+        return fig
 
     def disciplina(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
@@ -84,7 +84,7 @@ class Visualizador:
             xaxis_title="Jugador",
             yaxis_title="Cantidad de tarjetas"
         )
-        fig.show()
+        return fig
 
     def xg_vs_goles(self, equipo: str = None):
         df = self.filtrar(equipo)
@@ -119,7 +119,7 @@ class Visualizador:
             xaxis={'categoryorder': 'total descending'}
         )
 
-        fig.show()
+        return fig
 
     def acciones_creativas(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
@@ -144,7 +144,7 @@ class Visualizador:
             template="plotly_white",
             xaxis={'categoryorder': 'total descending'}
         )
-        fig.show()
+        return fig
 
     def goles_por_pais(self, pais: str = None):
         df = self.df.copy()
@@ -171,7 +171,7 @@ class Visualizador:
             yaxis_title="Total de Goles",
             xaxis={'categoryorder':'total descending'}
         )
-        fig.show()
+        return fig
 
     def defensiva_jugadores(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
@@ -200,7 +200,7 @@ class Visualizador:
             xaxis={'categoryorder': 'total descending'}
         )
 
-        fig.show()
+        return fig
 
     def grafico_pases_completados_tiempo(self, equipo: str = None):
         df = self.filtrar(equipo)
