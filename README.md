@@ -12,8 +12,6 @@ Sistema de análisis exploratorio de datos (EDA) de la **Premier League 2024/202
 - [Instalación](#-instalación)
 - [Uso](#-uso)
 - [Módulos](#-módulos)
-- [Dataset](#-dataset)
-- [Visualizaciones](#-visualizaciones)
 
 ---
 
@@ -26,7 +24,7 @@ Sistema de análisis exploratorio de datos (EDA) de la **Premier League 2024/202
 - **Visualizaciones Interactivas**: 8 gráficos con Plotly sobre rendimiento en diversos ambitos
 - **Modelado POO**: Clases de dominio (Jugador, Equipo, EstadisticasPartido)
 
-### 🚀 Tecnologías Utilizadas
+### Tecnologías Utilizadas
 
 - **Python 3.11**
 - **Pandas** - Manipulación de datos
@@ -36,7 +34,7 @@ Sistema de análisis exploratorio de datos (EDA) de la **Premier League 2024/202
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 
 ---
@@ -125,17 +123,17 @@ visualizador = Visualizador()
 #### Visualizaciones Disponibles
 
 | # | Visualización |
-|---|---------------|
-| 1 | ** |Goles y Asistencias |
-| 2 | ** |Precisión y volumen de pases |
-| 3 | ** |Cantidad de tarjetas |
-| 4 | ** |Expected Goals (xG) vs Goles reales |
-| 5 | ** |Acciones creativas |
-| 6 | ** |Total de Goles |
-| 7 | ** |Rendimiento Defensivo |
-| 8 | ** |Porcentaje de pases completados |
-| 9 | ** |Comparativa entre pases completados y pases progresivos |
-| 10 | ** |Relación entre carries y progressive carries |
+|:-:|:--------------|
+| 1 | **Goles y Asistencias** |
+| 2 | **Precisión y Volumen de Pases** |
+| 3 | **Cantidad de Tarjetas** |
+| 4 | **Expected Goals (xG) vs Goles Reales** |
+| 5 | **Acciones Creativas** |
+| 6 | **Total de Goles** |
+| 7 | **Rendimiento Defensivo** |
+| 8 | **Porcentaje de Pases Completados** |
+| 9 | **Comparativa Pases Completados vs Progresivos** |
+| 10 | **Relación Carries vs Progressive Carries** |
 
 ---
 
