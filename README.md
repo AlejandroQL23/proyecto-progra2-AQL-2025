@@ -63,7 +63,7 @@ plotly
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone 
+git clone https://github.com/AlejandroQL23/proyecto-progra2-AQL-2025.git
 cd premier-league-insights
 ```
 
