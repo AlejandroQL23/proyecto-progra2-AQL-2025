@@ -6,7 +6,7 @@ class Jugador:
     clase que representa a un jugador, tiene:
     infor personal y lista de estadisticas por partido.
     """
-
+    # optinal, si pasa parametro debe ser tipo EstadisticasPartido, sino None
     def __init__(
             self,
             name: str,

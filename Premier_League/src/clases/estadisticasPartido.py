@@ -6,7 +6,7 @@ class EstadisticasPartido:
     clase que representa estadisticas de un jugador en un partido, tiene:
     metricas de rendimiento por fecha.
     """
-
+    # optinal, si pasa parametro debe ser tipo float, sino None
     def __init__(
             self,
             date: datetime,

@@ -8,7 +8,7 @@ from Premier_League.src.helpers.utilidades import Utilidades
 class ProcesadorEDA(Utilidades):
     def __init__(self):
         self._dataframe: Optional[pd.DataFrame] = None
-
+    # self._dataframe: pd.DataFrame | None = None == equivale a usar Optional
 
     @property
     def dataframe(self) -> Optional[pd.DataFrame]:
@@ -21,12 +21,15 @@ class ProcesadorEDA(Utilidades):
             columnas: Optional[List[str]] = None
     ) -> pd.DataFrame:
 
+        #uso de herencia
         super().validar_dataframe(df)
 
         print("TIPOS DE DATOS POR COLUMNA")
         print("=" * 80)
 
         # Obtener información de tipos
+        # cada columna y obtiene su tipo
+
         tipos_info = []
         for col in df.columns:
             tipo = str(df[col].dtype)
@@ -36,7 +39,7 @@ class ProcesadorEDA(Utilidades):
                 'Tipo': tipo
             })
 
-        # DF con info
+        # DF con info de las columnas
         df_tipos = pd.DataFrame(tipos_info)
         print(df_tipos)
 
@@ -48,6 +51,7 @@ class ProcesadorEDA(Utilidades):
         if len(columnas_numericas) == 0:
             print("El DataFrame no contiene columnas numéricas")
             raise ValueError("El DataFrame debe tener al menos una columna numérica")
+        # raise lanza excepcion
 
         # validar columnas seleccionadas
         if columnas is not None:
@@ -115,6 +119,7 @@ class ProcesadorEDA(Utilidades):
             metodo: str = 'pearson',
     ) -> pd.DataFrame:
 
+        # usando herencia
         super().validar_dataframe(df)
 
         # metodo seleccionado es valido?
@@ -189,7 +194,6 @@ class ProcesadorEDA(Utilidades):
             print(f"Error al calcular matriz de correlación: {str(e)}")
             raise
 
-# ----------*----------------------*---------------------------*-------------------*-----------------------------*--------------------------*-
 
     def limpieza_datos(
             self,

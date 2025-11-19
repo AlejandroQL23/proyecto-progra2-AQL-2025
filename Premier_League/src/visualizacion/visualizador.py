@@ -26,12 +26,15 @@ class Visualizador:
 
     def goles_vs_asistencias(self, equipo: str = None):
         df = self.filtrar(equipo)
+        # .agg funcion de agregacion ValorATomar-Operacion (Pandas)
+        # si un jugador aparece varias veces, todas esas filas se combinan en un solo grupo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Goals": "sum",
             "Assists": "sum",
             "Minutes": "sum"
         })
 
+        # barras agrupadas
         fig = px.bar(
             df_grouped,
             x="Player",
@@ -41,12 +44,15 @@ class Visualizador:
             labels={"value": "Cantidad", "variable": "Estadística"},
         )
 
+        # ordena de mayor a menor segun el total (goles-asistencias).
         fig.update_layout(xaxis={'categoryorder': 'total descending'})
         return fig
 
     def precision_pases(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
 
+        # .agg funcion de agregacion ValorATomar-Operacion (Pandas)
+        # si un jugador aparece varias veces, todas esas filas se combinan en un solo grupo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Passes Attempted": "mean",
             "Passes Completed": "mean",
@@ -74,10 +80,13 @@ class Visualizador:
 
     def disciplina(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
-        df_disciplinado = df.groupby("Player")[["Yellow Cards", "Red Cards"]].sum().reset_index()
+        #agrupamos por jugador y solo tomamos columna de tarjetas y se suman
+        #reset_index= al hacer groupby por X columna, eso pasa a ser un indice, con esta framento se hace columna de nuevo
+        df_grouped = df.groupby("Player")[["Yellow Cards", "Red Cards"]].sum().reset_index()
+        # grafico en blanco hasta que se hagan los add
         fig = go.Figure()
-        fig.add_trace(go.Bar(x=df_disciplinado["Player"], y=df_disciplinado["Yellow Cards"], name="Yellow Cards", marker_color="gold"))
-        fig.add_trace(go.Bar(x=df_disciplinado["Player"], y=df_disciplinado["Red Cards"], name="Red Cards", marker_color="red"))
+        fig.add_trace(go.Bar(x=df_grouped["Player"], y=df_grouped["Yellow Cards"], name="Yellow Cards", marker_color="gold"))
+        fig.add_trace(go.Bar(x=df_grouped["Player"], y=df_grouped["Red Cards"], name="Red Cards", marker_color="red"))
         fig.update_layout(
             title=f"Disciplina — {equipo or 'Todos'} ({pos or 'Todas las posiciones'})",
             barmode="stack",
@@ -89,12 +98,16 @@ class Visualizador:
     def xg_vs_goles(self, equipo: str = None):
         df = self.filtrar(equipo)
 
+        # .agg funcion de agregacion ValorATomar-Operacion (Pandas)
+        # si un jugador aparece varias veces, todas esas filas se combinan en un solo grupo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Expected Goals (xG)": "mean",
             "Goals": "sum",
             "Team": "first"
         })
 
+        # melted - de columnas en filas, por el funcionamiento de ploty
+        # si no se hace esto, el grafico da error
         df_melted = df_grouped.melt(
             id_vars=["Player", "Team"],
             value_vars=["Expected Goals (xG)", "Goals"],
@@ -124,6 +137,8 @@ class Visualizador:
     def acciones_creativas(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
 
+        # .agg funcion de agregacion ValorATomar-Operacion (Pandas)
+        # si un jugador aparece varias veces, todas esas filas se combinan en un solo grupo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Shot-Creating Actions": "sum",
             "Goal-Creating Actions": "sum",
@@ -155,6 +170,8 @@ class Visualizador:
                 print(f"No se encontraron jugadores de la nación '{pais}'.")
                 return
 
+        # agrupamos por pais y jugador, solo tomamos columna de goles y se suman
+        # reset_index= al hacer groupby por X columna, eso pasa a ser un indice, con esta framento se hace columna de nuevo
         df_goles = df.groupby(["Nation", "Player"])["Goals"].sum().reset_index()
 
         fig = px.bar(
@@ -165,6 +182,7 @@ class Visualizador:
             title=f"Goles por jugador — {pais if pais else 'Todos los países'}",
             text="Goals"
         )
+        # mostrar textos fuera de las barras
         fig.update_traces(textposition="outside")
         fig.update_layout(
             xaxis_title="Jugador",
@@ -176,6 +194,8 @@ class Visualizador:
     def defensiva_jugadores(self, equipo: str = None, pos: str = None):
         df = self.filtrar(equipo, pos)
 
+        # agrupamos por jugador, solo tomamos bloqueos y tackles
+        # reset_index= al hacer groupby por X columna, eso pasa a ser un indice, con esta framento se hace columna de nuevo
         df_def = df.groupby("Player")[["Blocks", "Tackles"]].sum().reset_index()
 
         fig = go.Figure()
@@ -223,6 +243,8 @@ class Visualizador:
 
     def grafico_pases_completados_vs_progresivos(self, equipo: str = None):
         df = self.filtrar(equipo)
+        # agrupamos por jugador
+        # reset_index= al hacer groupby por X columna, eso pasa a ser un indice, con esta framento se hace columna de nuevo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Passes Completed": "mean",
             "Progressive Passes": "mean",
@@ -250,6 +272,8 @@ class Visualizador:
 
     def grafico_carries_vs_progresivos(self, equipo: str = None):
         df = self.filtrar(equipo)
+        # agrupamos por jugador, solo tomamos bloqueos y tackles
+        # reset_index= al hacer groupby por X columna, eso pasa a ser un indice, con esta framento se hace columna de nuevo
         df_grouped = df.groupby("Player", as_index=False).agg({
             "Carries": "mean",
             "Progressive Carries": "mean",

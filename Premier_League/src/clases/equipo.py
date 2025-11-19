@@ -7,6 +7,7 @@ class Equipo:
     jugadores que pertenecen al equipo
     """
 
+    # optinal, si pasa parametro debe ser tipo Jugador, sino None
     def __init__(
             self,
             name: str,
